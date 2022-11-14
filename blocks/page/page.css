@@ -1,0 +1,16 @@
+.page {
+  background-color: #000000;
+  color: #fff;
+  font-family: 'Inter', Arial, sans-serif;
+  padding-top: 45px;
+  padding-bottom: 60px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (max-width: 879px) {
+  .page {
+    padding-top: 28px;
+    padding-bottom: 36px;
+  }
+}
