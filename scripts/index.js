@@ -86,18 +86,6 @@ function closeNew() {
 }
 
 // Добавляет карточку с местом и фото
-// Тест
-//function addPlace(titleValue, linkValue) {
-  const list = document.querySelector('.todo-list');
-
-  const listItem = document.createElement('li');
-  listItem.textContent = 'Полить цветы';
-//}
-
-
-// добавляем элемент списка в конец списка
-list.append(listItem);
-
 //function addPlace(titleValue, linkValue) {
 //  cardsElement.querySelector('.element__title').textContent = titleValue;
 // cardsElement.querySelector('.element__image').src = linkValue;
