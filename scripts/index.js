@@ -86,22 +86,6 @@ function closeNew() {
 }
 
 // Добавляет карточку с местом и фото
-//function addPlace(titleValue, linkValue) {
-//  cardsElement.querySelector('.element__title').textContent = titleValue;
-// cardsElement.querySelector('.element__image').src = linkValue;
-
-//  const artistElement = document.createElement('h4');
-
-//  elementsList.prepend(cardsElement)
-
-//  closeNew();
-//}
-
-//function newFormSubmitHandler (nevt) {
-//  nevt.preventDefault();
-//  elementTitle.textContent = inputTitle.value;
-//  elementLink.src = inputLink.value;
-//}
 
 editButton.addEventListener('click', openPopup);
 closeEditPopupButton.addEventListener('click', closePopup);
