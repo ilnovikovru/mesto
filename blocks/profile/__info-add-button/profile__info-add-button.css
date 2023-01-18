@@ -14,8 +14,7 @@
 
 @media screen and (max-width: 617px) {
   .profile__info-add-button {
-    width: 100%;
+    width: 282px;
     background: url("../../../images/buttons/add-button-small.svg") no-repeat scroll 0 0 transparent;
-    align-self: center;
   }
 }
