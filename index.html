@@ -54,9 +54,17 @@
     </form>
   </div>
 </div>
+<div class="photo">
+  <div class="photo__container">
+    <button type="button" class="photo__close-button" aria-label="Закрыть"></button>
+    <img src="" alt="" class="photo__image">
+    <p class="photo__caption"></p>
+  </div>
+</div>
 <template class="element-template">
-  <li>
+  <li class="elements__list-item">
     <article class="element">
+      <button type="button" value="Удалить" class="element__delete" aria-label="Удалить"></button>
       <img src="" alt="" class="element__image">
       <div class="element__name">
         <h2 class="element__title">
