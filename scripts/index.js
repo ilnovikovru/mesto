@@ -89,7 +89,6 @@ addButton.addEventListener('click', openNew);
 closeAddNewPhotoPopupButton.addEventListener('click', closeNew);
 
 // Добавляет карточку с местом и фото
-
 let container = document.querySelector('.main'); // вводим переменную для <main>
 let elementContainer = container.querySelector('.elements__list'); // вводим переменную для списка карточек
 let newPhotoFormButton = document.querySelector('.new__submit-button'); // вводим переменную для формы
@@ -119,7 +118,6 @@ newPhotoFormButton.addEventListener('click', addPhoto); // вызываем фу
 
 
 // Позволяет лайкать карточку
-
 const likeButton = document.querySelectorAll('.element__like');
 
 likeButton.forEach(function (el) {
@@ -129,7 +127,6 @@ likeButton.forEach(function (el) {
 });
 
 // Удаляет карточку по клику на урну
-
 const deleteButton = document.querySelectorAll('.element__delete'); // получить все элементы по этому селектору
 
 deleteButton.forEach(function (el) { // потом пройтись по этому массиву циклом
