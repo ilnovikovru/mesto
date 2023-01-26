@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Место</title>
   <link href="./pages/index.css" rel="stylesheet">
+  <script defer src="./scripts/constants.js"></script>
+  <script defer src="./scripts/index.js"></script>
 </head>
 <body class="page">
   <header class="header">
@@ -37,28 +39,28 @@
     <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
     <h2 class="popup__title">Редактировать профиль</h2>
     <form id="form" class="popup__form" name="about">
-      <input value="Имя" class="popup__input-text popup__input-text_type_name" name="name" type="text">
-      <input value="О себе" class="popup__input-text popup__input-text_type_caption" name="caption" type="text">
+      <input value="Имя" class="popup__input-text popup__input-text_type_name" name="name" type="text" required>
+      <input value="О себе" class="popup__input-text popup__input-text_type_caption" name="caption" type="text" required>
       <button type="submit" form="form" class="popup__submit-button">Сохранить</button>
     </form>
   </div>
 </div>
-<div class="new">
-  <div class="new__container">
-    <button type="button" class="new__close-button" aria-label="Закрыть"></button>
-    <h2 class="new__title">Новое место</h2>
-    <form id="new-form" class="new__form" name="about">
-      <input placeholder="Название" class="new__input-text new__input-text_type_name" name="title" type="text">
-      <input placeholder="Ссылка на картинку" class="new__input-text new__input-text_type_caption" name="link" type="text">
-      <button type="submit" form="form" class="new__submit-button">Создать</button>
+<div class="popup popup_add">
+  <div class="popup__container">
+    <button type="button" class="popup__close-button popup__close-button_add" aria-label="Закрыть"></button>
+    <h2 class="popup__title">Новое место</h2>
+    <form id="form_add" class="popup__form" name="about">
+      <input placeholder="Название" class="popup__input-text popup__input-text_type_name_add" name="title" type="text" required>
+      <input placeholder="Ссылка на картинку" class="popup__input-text popup__input-text_type_caption_add" name="link" type="url" required>
+      <button type="submit" form="form" class="popup__submit-button popup__submit-button_add">Создать</button>
     </form>
   </div>
 </div>
-<div class="photo">
-  <div class="photo__container">
-    <button type="button" class="photo__close-button" aria-label="Закрыть"></button>
-    <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="Архыз" class="photo__image">
-    <p class="photo__caption"></p>
+<div class="popup popup_photo">
+  <div class="popup__photo-container">
+    <button type="button" class="popup__close-button popup__close-button_photo" aria-label="Закрыть"></button>
+    <img src="#" alt="Архыз" class="popup__photo-image">
+    <p class="popup__photo-caption"></p>
   </div>
 </div>
 <template class="element-template">
@@ -76,6 +78,5 @@
   </li>
 </template>
 
-<script src="./scripts/index.js"></script>
 </body>
 </html>
