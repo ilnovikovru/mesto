@@ -87,8 +87,8 @@ function createCard(titleValue, linkValue) { // создаем метод create
 }
 
 newPhotoFormButton.addEventListener('click', function () {
-  const title = document.querySelector(".popup__input-text_type_name_add");
-  const link = document.querySelector(".popup__input-text_type_caption_add");
+  const title = document.querySelector(".popup__input-text_type_title");
+  const link = document.querySelector(".popup__input-text_type_link");
 
   createCard(title.value, link.value);
 
