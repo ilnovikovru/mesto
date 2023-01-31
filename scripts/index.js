@@ -14,6 +14,14 @@ const photoPopup = document.querySelector(".popup_photo");
 const elementsList = document.querySelector(".elements__list");
 const elementsTemplate = document.querySelector(".element-template").content;
 
+function openPopup(element) {
+  element.classList.add("popup_opened");
+}
+
+function closePopup(element) {
+  element.classList.remove("popup_opened");
+}
+
 //
 const createCard = (element) => {
   const cardElement = elementsTemplate.cloneNode(true);
@@ -23,7 +31,7 @@ const createCard = (element) => {
 
   const deleteButton = cardElement.querySelector('.element__delete');
   deleteButton.addEventListener('click', () => {
-    const element = document.querySelector(".element__delete").closest(".elements__list-item");
+    const element = deleteButton.closest(".elements__list-item");
     element.remove();
   });
 
@@ -38,7 +46,7 @@ const createCard = (element) => {
   const photoPopupElement = (element) => document.querySelector(`.popup_photo ${element}`);
   photoItem.forEach((img) => {
     img.addEventListener("click", (el) => {
-    photoPopup.classList.add("popup_opened");
+    openPopup(photoPopup);
     photoPopupElement("img").src = img.src;
     photoPopupElement("p").textContent = img.alt;
     photoPopupElement("img").alt = img.alt;
@@ -53,69 +61,57 @@ const renderCards = (element) => {
 };
 
 const addNewCard = (element) => {
-  element.preventDefault;
   elementsList.prepend(createCard(element));
-  closeNew();
+  closePopup(addNewPhotoPopup);
 };
 
 initialCards.forEach((item) => {
   renderCards(item);
 });
 
-//const newPhotoFormButton = document.querySelector(".popup__submit-button_add"); // ! исправить на форму
-const addNewPhotoForm = document.querySelector('.popup__form_add');
+const newPhotoFormButton = document.querySelector(".popup__submit-button_add");
 
 const inputPhotoName = document.querySelector(".popup__input-text_type_title");
 const inputLink = document.querySelector(".popup__input-text_type_link");
 
-addNewPhotoForm.addEventListener('submit', () => { // ! исправить на submit
+newPhotoFormButton.addEventListener('click', () => {
   const name = inputPhotoName.value;
   const link = inputLink.value;
   element = {name, link};
   addNewCard(element);
 });
 
-// Открывает попап редактирования профиля
-function openEditPopup() {
-  inputName.value = profileName.textContent;
-  inputCaption.value = profileCaption.textContent;
-  editPopup.classList.add("popup_opened");
-}
-
-// Закрывает попап редактирования профиля
-function closeEditPopup() {
-  editPopup.classList.remove("popup_opened");
-}
-
 // Меняет имя и подпись
 function formSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileCaption.textContent = inputCaption.value;
-  closeEditPopup();
+  closePopup(editPopup);
 }
 
-// Открывает попап добавления фото
-function openNewPopup() {
-  addNewPhotoPopup.classList.add("popup_opened");
-}
-
-// Закрывает попап добавления фото
-function closeNew() {
-  addNewPhotoPopup.classList.remove("popup_opened");
-}
-
-editButton.addEventListener("click", openEditPopup);
-closeEditPopupButton.addEventListener("click", closeEditPopup);
+editButton.addEventListener("click", () => {
+  inputName.value = profileName.textContent;
+  inputCaption.value = profileCaption.textContent;
+  element = editPopup;
+  openPopup(element);
+});
+closeEditPopupButton.addEventListener("click", () => {
+  element = editPopup;
+  closePopup(element);
+});
 editFormElement.addEventListener("submit", formSubmitHandler);
-addButton.addEventListener("click", openNewPopup);
-closeAddNewPhotoPopupButton.addEventListener("click", closeNew);
-
-// Закрывает попап добавления фото
-function closePhoto() {
-  photoPopup.classList.remove('popup_opened');
-}
+addButton.addEventListener("click", () => {
+  element = addNewPhotoPopup;
+  openPopup(element);
+});
+closeAddNewPhotoPopupButton.addEventListener("click", () => {
+  element = addNewPhotoPopup;
+  closePopup(element);
+});
 
 const closePhotoButton = document.querySelector('.popup__close-button_photo');
 
-closePhotoButton.addEventListener("click", closePhoto);
+closePhotoButton.addEventListener("click", () => {
+  element = photoPopup
+  closePopup(element);
+});
