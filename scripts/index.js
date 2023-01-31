@@ -42,8 +42,6 @@ const renderCards = (element) => {
 
 const addNewCard = (element) => {
   element.preventDefault;
-  const name = document.querySelector(".popup__input-text_type_name");
-  const link = document.querySelector(".popup__input-text_type_link");
   elementsList.prepend(createCard(element));
   closeNew();
 };
@@ -54,7 +52,14 @@ initialCards.forEach((item) => {
 
 const newPhotoFormButton = document.querySelector(".popup__submit-button_add"); // вводим переменную для формы
 
-newPhotoFormButton.addEventListener('click', addNewCard);
+const inputPhotoName = document.querySelector(".popup__input-text_type_title");
+const inputLink = document.querySelector(".popup__input-text_type_link");
+
+newPhotoFormButton.addEventListener('click', () => {
+  const name = inputPhotoName.value;
+  const link = inputLink.value;
+  addNewCard(name, link);
+});
 
 //const addNewPhotoForm = document.querySelector('.popup__form_add');
 
