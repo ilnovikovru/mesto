@@ -77,7 +77,7 @@ function formSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileCaption.textContent = inputCaption.value;
-  closeNew();
+  closeEditPopup();
 }
 
 // Открывает попап добавления фото
