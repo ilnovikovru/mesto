@@ -42,7 +42,7 @@ const renderCards = (element) => {
 
 const addNewCard = (element) => {
   element.preventDefault;
-  const name = document.querySelector(".popup__input-text_type_title");
+  const name = document.querySelector(".popup__input-text_type_name");
   const link = document.querySelector(".popup__input-text_type_link");
   elementsList.prepend(createCard(element));
   closeNew();
