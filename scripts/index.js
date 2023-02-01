@@ -56,7 +56,7 @@ const createCard = (element) => {
   return cardElement;
 }
 
-const renderCards = (element) => {
+const renderInitialCard = (element) => {
   elementsList.append(createCard(element));
 };
 
@@ -66,7 +66,7 @@ const addNewCard = (element) => {
 };
 
 initialCards.forEach((item) => {
-  renderCards(item);
+  renderInitialCard(item);
 });
 
 const newPhotoFormButton = document.querySelector(".popup__submit-button_add");
@@ -77,7 +77,7 @@ const inputLink = document.querySelector(".popup__input-text_type_link");
 newPhotoFormButton.addEventListener('click', () => {
   const name = inputPhotoName.value;
   const link = inputLink.value;
-  element = {name, link};
+  const element = {name, link};
   addNewCard(element);
 });
 
@@ -92,26 +92,21 @@ function formSubmitHandler(evt) {
 editButton.addEventListener("click", () => {
   inputName.value = profileName.textContent;
   inputCaption.value = profileCaption.textContent;
-  element = editPopup;
-  openPopup(element);
+  openPopup(editPopup);
 });
 closeEditPopupButton.addEventListener("click", () => {
-  element = editPopup;
-  closePopup(element);
+  closePopup(editPopup);
 });
 editFormElement.addEventListener("submit", formSubmitHandler);
 addButton.addEventListener("click", () => {
-  element = addNewPhotoPopup;
-  openPopup(element);
+  openPopup(addNewPhotoPopup);
 });
 closeAddNewPhotoPopupButton.addEventListener("click", () => {
-  element = addNewPhotoPopup;
-  closePopup(element);
+  closePopup(addNewPhotoPopup);
 });
 
 const closePhotoButton = document.querySelector('.popup__close-button_photo');
 
 closePhotoButton.addEventListener("click", () => {
-  element = photoPopup
-  closePopup(element);
+  closePopup(photoPopup);
 });
