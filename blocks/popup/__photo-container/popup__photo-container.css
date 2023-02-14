@@ -2,6 +2,7 @@
   margin: auto;
   position: relative;
   width: fit-content;
+  cursor: default;
 }
 
 @media screen and (max-width: 879px) {

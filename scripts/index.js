@@ -10,6 +10,7 @@ const inputName = document.querySelector(".popup__input-text_type_name");
 const inputCaption = document.querySelector(".popup__input-text_type_caption");
 const editFormElement = document.querySelector(".popup__form_edit");
 const photoPopup = document.querySelector(".popup_photo");
+const popup = document.querySelector(".popup");
 
 const elementsList = document.querySelector(".elements__list");
 const elementsTemplate = document.querySelector(".element-template").content;
@@ -22,7 +23,6 @@ function closePopup(element) {
   element.classList.remove("popup_opened");
 }
 
-//
 const createCard = (element) => {
   const cardElement = elementsTemplate.cloneNode(true);
   cardElement.querySelector('.element__title').textContent = element.name;
@@ -81,7 +81,6 @@ newPhotoFormButton.addEventListener('click', () => {
   addNewCard(element);
 });
 
-// Меняет имя и подпись
 function formSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
@@ -109,4 +108,24 @@ const closePhotoButton = document.querySelector('.popup__close-button_photo');
 
 closePhotoButton.addEventListener("click", () => {
   closePopup(photoPopup);
+});
+
+function closePopupByOverlay() {
+  const popupList = Array.from(document.querySelectorAll('.popup'));
+
+  popupList.forEach((popup) => {
+    popup.addEventListener('click', () => {
+      const element = popup.closest('.popup');
+      closePopup(element);
+    });
+  });
+};
+closePopupByOverlay();
+
+document.addEventListener('keydown', function(e) {
+  if (e.keyCode === 27) {
+    closePopup(editPopup);
+    closePopup(addNewPhotoPopup);
+    closePopup(photoPopup);
+  }
 });
