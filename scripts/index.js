@@ -1,9 +1,7 @@
 const editButton = document.querySelector(".profile__info-edit-button");
 const addButton = document.querySelector(".profile__info-add-button");
 const closeEditPopupButton = document.querySelector(".popup__close-button");
-const closeAddNewPhotoPopupButton = document.querySelector(
-  ".popup__close-button_add"
-);
+const closeAddNewPhotoPopupButton = document.querySelector(".popup__close-button_add");
 const editPopup = document.querySelector(".popup_edit");
 const addNewPhotoPopup = document.querySelector(".popup_add");
 const profileName = document.querySelector(".profile__info-title");
@@ -14,7 +12,8 @@ const editFormElement = document.querySelector(".popup__form_edit");
 const addFormElement = document.querySelector(".popup__form_add");
 const photoPopup = document.querySelector(".popup_photo");
 const popup = document.querySelector(".popup");
-
+const photoPopupImage = photoPopup.querySelector('.popup__photo-image');
+const photoPopupCaption = photoPopup.querySelector('.popup__photo-caption');
 const elementsList = document.querySelector(".elements__list");
 const elementsTemplate = document.querySelector(".element-template").content;
 
@@ -48,8 +47,6 @@ const createCard = (element) => {
   });
 
   const photoItem = Array.from(cardElement.querySelectorAll(".element__image"));
-  const photoPopupImage = photoPopup.querySelector('.popup__photo-image');
-  const photoPopupCaption = photoPopup.querySelector('.popup__photo-caption');
   photoItem.forEach(function (item) {
     item.addEventListener("click", () => {
       openPopup(photoPopup);
@@ -76,11 +73,13 @@ initialCards.forEach((item) => {
 });
 
 const newPhotoFormButton = document.querySelector(".popup__submit-button_add");
+const newPhotoForm = document.querySelector(".popup__form_add");
 
 const inputPhotoName = document.querySelector(".popup__input-text_type_title");
 const inputLink = document.querySelector(".popup__input-text_type_link");
 
-newPhotoFormButton.addEventListener("click", () => {
+newPhotoForm.addEventListener("submit", () => {
+  evt.preventDefault();
   const name = inputPhotoName.value;
   const link = inputLink.value;
   const element = { name, link };
