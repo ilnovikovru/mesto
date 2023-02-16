@@ -78,7 +78,7 @@ const newPhotoForm = document.querySelector(".popup__form_add");
 const inputPhotoName = document.querySelector(".popup__input-text_type_title");
 const inputLink = document.querySelector(".popup__input-text_type_link");
 
-newPhotoForm.addEventListener("submit", () => {
+newPhotoForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   const name = inputPhotoName.value;
   const link = inputLink.value;
