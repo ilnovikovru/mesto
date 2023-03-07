@@ -47,12 +47,13 @@ const profileName = document.querySelector(".profile__info-title");
 const profileCaption = document.querySelector(".profile__info-subtitle");
 const inputName = document.querySelector(".popup__input-text_type_name");
 const inputCaption = document.querySelector(".popup__input-text_type_caption");
-const editFormElement = document.querySelector(".popup__form_edit");
+const editFormElement = document.forms["about"];
 const addFormElement = document.querySelector(".popup__form_add");
 const photoPopup = document.querySelector(".popup_photo");
 const photoPopupImage = photoPopup.querySelector('.popup__photo-image');
 const photoPopupCaption = photoPopup.querySelector('.popup__photo-caption');
 const elementsList = document.querySelector(".elements__list");
+const cardTemplate = document.querySelector(".element-template");
 
 new FormValidator(formValidationConfig, editFormElement).enableValidation();
 new FormValidator(formValidationConfig, addFormElement).enableValidation();
@@ -67,20 +68,23 @@ function closePopup(element) {
   document.removeEventListener('keydown', closeByEscape);
 }
 
+const createCard = (item) => {
+  const cardElement = new Card(item.name, item.link, cardTemplate).generateCard();
+  return cardElement;
+}
+
 const renderInitialCard = (item) => {
-  elementsList.append((new Card(item.name, item.link)).generateCard());
+  elementsList.append(createCard(item));
 };
 
 const addNewCard = (item) => {
-  elementsList.prepend((new Card(item.name, item.link)).generateCard());
+  elementsList.prepend(createCard(item));
   closePopup(addNewPhotoPopup);
 };
 
 initialCards.forEach((element) => {
   renderInitialCard(element);
 });
-
-const newPhotoFormButton = document.querySelector(".popup__submit-button_add");
 
 const inputPhotoName = document.querySelector(".popup__input-text_type_title");
 const inputLink = document.querySelector(".popup__input-text_type_link");
@@ -95,7 +99,7 @@ addFormElement.addEventListener("submit", (evt) => {
   inputLink.value = "";
 });
 
-function formSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileCaption.textContent = inputCaption.value;
@@ -110,12 +114,9 @@ editButton.addEventListener("click", () => {
 closeEditPopupButton.addEventListener("click", () => {
   closePopup(editPopup);
 });
-editFormElement.addEventListener("submit", formSubmitHandler);
+editFormElement.addEventListener("submit", handleProfileFormSubmit);
 addButton.addEventListener("click", () => {
   openPopup(addNewPhotoPopup);
-  const isFormValid = addFormElement.checkValidity();
-  newPhotoFormButton.disabled = !isFormValid;
-  newPhotoFormButton.classList.toggle('popup__submit-button_inactive', !isFormValid);
 });
 closeAddNewPhotoPopupButton.addEventListener("click", () => {
   closePopup(addNewPhotoPopup);

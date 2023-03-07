@@ -8,7 +8,7 @@ class Card {
   }
 
   _getTemplate() {
-    const cardElement = document.querySelector(".element-template").content.cloneNode(true);
+    const cardElement = this._template.content.cloneNode(true);
     return cardElement;
   }
 
@@ -28,8 +28,7 @@ class Card {
   }
 
   _handleCardClick = () => {
-    this._photoItem = this._element.querySelector(".element__image");
-    this._photoItem.addEventListener("click", () => {
+    this._cardImage.addEventListener("click", () => {
       openPopup(photoPopup);
       photoPopupImage.src = this._link;
       photoPopupCaption.textContent = this._name;
@@ -46,9 +45,10 @@ class Card {
 
   generateCard() {
     this._element = this._getTemplate();
+    this._cardImage = this._element.querySelector(".element__image");
     this._element.querySelector(".element__title").textContent = this._name;
-    this._element.querySelector(".element__image").src = this._link;
-    this._element.querySelector(".element__image").alt = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
     this._setEventListeners();
     return this._element;
   }
