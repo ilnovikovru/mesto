@@ -14,10 +14,10 @@ class FormValidator {
   enableValidation() {
     this._formElement.addEventListener("submit", this._disableSubmit);
     this._formElement.addEventListener("input", () => {
-      this._toggleButton();
+      this.toggleButton();
     });
     this._addInputListeners();
-    this._toggleButton();
+    this.toggleButton();
   }
 
   _handleFormInput(event, config) {
@@ -34,7 +34,7 @@ class FormValidator {
     }
   }
 
-  _toggleButton() {
+  toggleButton() {
     const isFormValid = this._formElement.checkValidity();
 
     this._submitButton.disabled = !isFormValid;

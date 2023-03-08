@@ -55,8 +55,12 @@ const photoPopupCaption = photoPopup.querySelector('.popup__photo-caption');
 const elementsList = document.querySelector(".elements__list");
 const cardTemplate = document.querySelector(".element-template");
 
-new FormValidator(formValidationConfig, editFormElement).enableValidation();
-new FormValidator(formValidationConfig, addFormElement).enableValidation();
+const profileValidator = new FormValidator(formValidationConfig, editFormElement);
+profileValidator.enableValidation();
+
+const cardFormValidator = new FormValidator(formValidationConfig, addFormElement);
+cardFormValidator.enableValidation();
+
 
 function openPopup(element) {
   element.classList.add("popup_opened");
@@ -97,6 +101,7 @@ addFormElement.addEventListener("submit", (evt) => {
   addNewCard(element);
   inputPhotoName.value = "";
   inputLink.value = "";
+  cardFormValidator.toggleButton();
 });
 
 function handleProfileFormSubmit(evt) {
