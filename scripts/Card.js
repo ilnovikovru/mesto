@@ -1,7 +1,9 @@
+// Свяжите класс Card c попапом
 import { openPopup, photoPopup, photoPopupImage, photoPopupCaption } from "./index.js";
 
 class Card {
-  constructor(name, link, template) {
+  constructor(name, link, template) { // принимал в конструктор функцию handleCardClick.
+    // Эта функция должна открывать попап с картинкой при клике на карточку.
     this._name = name;
     this._link = link;
     this._template = template;
@@ -21,7 +23,6 @@ class Card {
   }
 
   _handleLikeButton = () => {
-    this._likeButton = this._element.querySelector(".element__like");
     this._likeButton.addEventListener("click", () => {
       this._likeButton.classList.toggle("element__like_active");
     });
@@ -34,7 +35,6 @@ class Card {
       photoPopupCaption.textContent = this._name;
       photoPopupImage.alt = this._name;
     });
-    console.log();
   }
 
   _setEventListeners() {
@@ -45,6 +45,7 @@ class Card {
 
   generateCard() {
     this._element = this._getTemplate();
+    this._likeButton = this._element.querySelector(".element__like");
     this._cardImage = this._element.querySelector(".element__image");
     this._element.querySelector(".element__title").textContent = this._name;
     this._cardImage.src = this._link;

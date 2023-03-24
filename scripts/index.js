@@ -1,5 +1,7 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import Section from "./Section.js";
+import Popup from "./Popup.js";
 
 const initialCards = [
   {
@@ -61,6 +63,24 @@ profileValidator.enableValidation();
 const cardFormValidator = new FormValidator(formValidationConfig, addFormElement);
 cardFormValidator.enableValidation();
 
+const createCard = (item) => {
+  const cardElement = new Card(item.name, item.link, cardTemplate).generateCard();
+  return cardElement;
+}
+
+const renderInitialCard = (item) => {
+  elementsList.append(createCard(item));
+};
+
+const section = new Section(renderInitialCard, elementsList); // инициализирую класс, передаю ему функцию рендера и контейнер
+section.renderItems(initialCards); // вызываю функцию ренедра и передаю ей данные
+
+const addNewCard = (item) => {
+  elementsList.prepend(createCard(item));
+  closePopup(addNewPhotoPopup);
+};
+
+initialCards.forEach(renderInitialCard);
 
 function openPopup(element) {
   element.classList.add("popup_opened");
@@ -71,24 +91,6 @@ function closePopup(element) {
   element.classList.remove("popup_opened");
   document.removeEventListener('keydown', closeByEscape);
 }
-
-const createCard = (item) => {
-  const cardElement = new Card(item.name, item.link, cardTemplate).generateCard();
-  return cardElement;
-}
-
-const renderInitialCard = (item) => {
-  elementsList.append(createCard(item));
-};
-
-const addNewCard = (item) => {
-  elementsList.prepend(createCard(item));
-  closePopup(addNewPhotoPopup);
-};
-
-initialCards.forEach((element) => {
-  renderInitialCard(element);
-});
 
 const inputPhotoName = document.querySelector(".popup__input-text_type_title");
 const inputLink = document.querySelector(".popup__input-text_type_link");

@@ -4,7 +4,6 @@ class FormValidator {
     this._formElement = form;
     this._submitButton = this._formElement.querySelector(this._formValidationConfig.submitButtonSelector);
     this._inputList = Array.from(this._formElement.querySelectorAll(this._formValidationConfig.inputSelector));
-
   }
 
   _disableSubmit(evt) {
