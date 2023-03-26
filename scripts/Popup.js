@@ -4,7 +4,7 @@ export default class Popup {
     this._openedPopup = document.querySelector('.popup_opened');
     this._handleEscClose = this._handleEscClose.bind(this);
     this.setEventListeners = this.setEventListeners.bind(this);
-    // this._popupOverlay = document.querySelector(".popup__overlay");
+    this._popupOverlay = document.querySelector(".popup__overlay");
   }
 
   open() {
@@ -30,16 +30,5 @@ export default class Popup {
         this.close(this._popup);
       }
     })
-
-    // this._popupOverlayList = Array.from(
-    //   document.querySelectorAll(".popup__overlay")
-    //   );
-    //   this._popupOverlayList.forEach((popupOverlay) => {
-    //     popupOverlay.addEventListener("click", () => {
-    //       console.log('Ты кликнул на фон'); // это выводится при клике на оверлей
-    //       this.close(this._popup);
-    //     });
-    //   });
-
   }
 }
