@@ -1,5 +1,4 @@
-// Свяжите класс Card c попапом
-import { openPopup, photoPopup, photoPopupImage, photoPopupCaption } from "./index.js";
+import Popup from "./Popup.js";
 
 class Card {
   constructor(name, link, template) { // принимал в конструктор функцию handleCardClick.
@@ -7,6 +6,7 @@ class Card {
     this._name = name;
     this._link = link;
     this._template = template;
+    this._photoPopup = new Popup('.popup_photo');
   }
 
   _getTemplate() {
@@ -30,10 +30,10 @@ class Card {
 
   _handleCardClick = () => {
     this._cardImage.addEventListener("click", () => {
-      openPopup(photoPopup);
-      photoPopupImage.src = this._link;
-      photoPopupCaption.textContent = this._name;
-      photoPopupImage.alt = this._name;
+      this._photoPopup.open();
+      this._photoPopupImage.src = this._link;
+      this._photoPopupCaption.textContent = this._name;
+      this._photoPopupImage.alt = this._name;
     });
   }
 
@@ -47,6 +47,11 @@ class Card {
     this._element = this._getTemplate();
     this._likeButton = this._element.querySelector(".element__like");
     this._cardImage = this._element.querySelector(".element__image");
+
+    this._photoPopupSelector = document.querySelector(".popup_photo");
+    this._photoPopupImage = this._photoPopupSelector.querySelector('.popup__photo-image');
+    this._photoPopupCaption = this._photoPopupSelector.querySelector('.popup__photo-caption');
+
     this._element.querySelector(".element__title").textContent = this._name;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;

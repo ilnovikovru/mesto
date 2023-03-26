@@ -1,6 +1,10 @@
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._openedPopup = document.querySelector('.popup_opened');
+    this._handleEscClose = this._handleEscClose.bind(this);
+    this.setEventListeners = this.setEventListeners.bind(this);
+    // this._popupOverlay = document.querySelector(".popup__overlay");
   }
 
   open() {
@@ -13,7 +17,7 @@ export default class Popup {
     document.removeEventListener('keydown', this._handleEscClose);
   }
 
-  _handleEscClose() {
+  _handleEscClose(evt) {
     if (evt.key === 'Escape') {
       this.close(this._popup);
     }
@@ -21,9 +25,21 @@ export default class Popup {
 
   setEventListeners() {
     this._popup.addEventListener('mousedown', (evt) => {
+    console.log(evt.target.classList);
       if (evt.target.classList.contains('popup_opened')) {
         this.close(this._popup);
       }
     })
+
+    // this._popupOverlayList = Array.from(
+    //   document.querySelectorAll(".popup__overlay")
+    //   );
+    //   this._popupOverlayList.forEach((popupOverlay) => {
+    //     popupOverlay.addEventListener("click", () => {
+    //       console.log('Ты кликнул на фон'); // это выводится при клике на оверлей
+    //       this.close(this._popup);
+    //     });
+    //   });
+
   }
 }
