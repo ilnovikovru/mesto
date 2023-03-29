@@ -1,11 +1,11 @@
 import Popup from "./Popup.js";
 
-class Card {
-  constructor(name, link, template) { // принимал в конструктор функцию handleCardClick.
-    // Эта функция должна открывать попап с картинкой при клике на карточку.
+export default class Card {
+  constructor(name, link, template, handleCardClick) {
     this._name = name;
     this._link = link;
     this._template = template;
+    this._handleCardClick = handleCardClick;
     this._photoPopup = new Popup('.popup_photo');
   }
 
@@ -28,19 +28,17 @@ class Card {
     });
   }
 
-  _handleCardClick = () => {
+  _handleCardClickInner = () => {
     this._cardImage.addEventListener("click", () => {
-      this._photoPopup.open();
-      this._photoPopupImage.src = this._link;
-      this._photoPopupCaption.textContent = this._name;
-      this._photoPopupImage.alt = this._name;
+      this._handleCardClick(this._name, this._link);
     });
+
   }
 
   _setEventListeners() {
     this._handleDeleteCard();
     this._handleLikeButton();
-    this._handleCardClick();
+    this._handleCardClickInner();
   }
 
   generateCard() {
@@ -60,5 +58,3 @@ class Card {
   }
 
 }
-
-export default Card;

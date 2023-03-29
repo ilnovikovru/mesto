@@ -1,13 +1,18 @@
 export default class UserInfo {
-  constructor(popupSelector) { // объект с селекторами двух элементов: элемента имени пользователя и элемента информации о себе
-
-  }
-  getUserInfo() { // возвращает объект с данными пользователя
-
+  constructor({ selectorOfNameElement, selectorOfCaptionElement }) {
+    this._userName = document.querySelector(selectorOfNameElement);
+    this._userCaption = document.querySelector(selectorOfCaptionElement);
   }
 
-  setUserInfo() { // принимает новые данные пользователя и добавляет их на страницу
-
+  getUserInfo() {
+    return {
+      name: this._userName.textContent,
+      caption: this._userCaption.textContent
+    }
   }
 
+  setUserInfo({ name, caption }) {
+    this._userName.textContent = name;
+    this._userCaption.textContent = caption;
+  }
 }
