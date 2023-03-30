@@ -1,12 +1,12 @@
 import Popup from "./Popup.js";
 
 export default class Card {
-  constructor(name, link, template, handleCardClick) {
+  constructor(name, link, template, handleCardClick, photoPopup) {
     this._name = name;
     this._link = link;
     this._template = template;
     this._handleCardClick = handleCardClick;
-    this._photoPopup = new Popup('.popup_photo');
+    this._photoPopup = photoPopup;
   }
 
   _getTemplate() {
@@ -14,17 +14,25 @@ export default class Card {
     return cardElement;
   }
 
+  _deleteCard(){
+    this._element = this._deleteButton.closest(".elements__list-item");
+    this._element.remove();
+}
+
   _handleDeleteCard() {
     this._deleteButton = this._element.querySelector(".element__delete");
     this._deleteButton.addEventListener("click", () => {
-      this._element = this._deleteButton.closest(".elements__list-item");
-      this._element.remove();
+      this._deleteCard()
     });
+  }
+
+  _toggleLike(){
+    this._likeButton.classList.toggle("element__like_active");
   }
 
   _handleLikeButton = () => {
     this._likeButton.addEventListener("click", () => {
-      this._likeButton.classList.toggle("element__like_active");
+      this._toggleLike();
     });
   }
 
