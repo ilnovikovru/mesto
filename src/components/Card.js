@@ -1,13 +1,21 @@
-import Popup from "./Popup.js";
-
 export default class Card {
-  constructor(name, link, template, handleCardClick, photoPopup) {
+  constructor(name, link, template, handleCardClick, photoPopup, api) {
     this._name = name;
     this._link = link;
     this._template = template;
     this._handleCardClick = handleCardClick;
     this._photoPopup = photoPopup;
+    this._api = api;
   }
+
+  // _saveItem = (text) => {
+  //   this._api
+  //   .addCard({ name: text })
+  //   .then ((data) => this.addItem(data.name))
+  //   .catch((err) => console.log(err))
+  //   };
+
+// там, где был метод add, станет _saveItem
 
   _getTemplate() {
     const cardElement = this._template.content.cloneNode(true);
@@ -15,8 +23,13 @@ export default class Card {
   }
 
   _deleteCard(){
+    // this._api.deleteCard(this._id)
+    // .then(() => {
+      // сюда переместить Remove
+    // })
+    // .catch((err) => console.log(err))
     this._element = this._deleteButton.closest(".elements__list-item");
-    this._element.remove();
+    this._element.remove(); //
 }
 
   _handleDeleteCard() {
