@@ -45,23 +45,48 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
-        about: data.link
+        link: data.link
       })
     })
     .then(this._response);
   }
 
-  // deleteCard(id) {
-  //   return fetch(`${this._url}${id}`, {
-  //     method: 'DELETE',
-  //     headers: this._headers
-  //   })
-  //   .then(res => {
-  //     if(res.ok) {
-  //       return res.json();
-  //     }
+  deleteCard(_id) {
+    return fetch(`${this._url}/cards/${_id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+    .then(this._response);
+  }
 
-  //     return Promise.reject('Произошла ошибка');
-  //   })
-  // }
+  likeCard(_id) {
+    return fetch(`${this._url}/cards/${_id}/likes`, {
+      method: 'PUT',
+      headers: this._headers
+    })
+    .then(this._response);
+  }
+
+  dislikeCard(_id) {
+    return fetch(`${this._url}/cards/${_id}/likes`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+    .then(this._response);
+  }
+
+  editAvatar(data) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: data.avatar,
+      })
+    })
+    .then(this._response)
+    .then(console.log({
+      avatar: data.avatar,
+    }))
+  }
+
 }

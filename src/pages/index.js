@@ -3,9 +3,10 @@ import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithButton from "../components/PopupWithButton.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js"; // импортируем класс Апи
-import { formValidationConfig, editButton, addButton,
+import { formValidationConfig, editButton, addButton, editAvatarButton,
   inputName, inputCaption, editFormElement, addFormElement, cardTemplate } from "../utils/constants.js";
 import '../pages/index.css';
 
@@ -42,7 +43,17 @@ const handleOpenPhotoPopup = (name, link) => {
 }
 
 const createCard = (item) => {
-  const cardElement = new Card(item.name, item.link, cardTemplate, handleOpenPhotoPopup, photoPopup).generateCard();
+  const cardElement = new Card(item.name,
+    item.link,
+    item.likes,
+    item.owner._id,
+    item._id,
+    cardTemplate,
+    handleOpenPhotoPopup,
+    photoPopup,
+    api,
+    popupWithButton).
+    generateCard();
   return cardElement;
 }
 
@@ -69,13 +80,14 @@ editPopup.setEventListeners();
 
 const userInfo = new UserInfo({
   selectorOfNameElement: '.profile__info-title',
-  selectorOfCaptionElement: '.profile__info-subtitle'
+  selectorOfCaptionElement: '.profile__info-subtitle',
+  selectorOfAvatarElement: '.profile__avatar'
 });
 
-function handleProfileFormSubmit({ name, about }) {
-  api.editUserInfo({ name, about })
-  .then(({ name, about }) => {
-    userInfo.setUserInfo({ name, about });
+function handleProfileFormSubmit({ name, about, avatar }) {
+  api.editUserInfo({ name, about, avatar })
+  .then(({ name, about, avatar }) => {
+    userInfo.setUserInfo({ name, about, avatar });
   })
   .catch((err) => {
     console.log(err);
@@ -95,10 +107,41 @@ function handleAddPhotoFormSubmit({ name, link }) {
 editButton.addEventListener("click", () => {
   const infoObject = userInfo.getUserInfo();
   inputName.value = infoObject.name;
-  inputCaption.value = infoObject.caption;
+  inputCaption.value = infoObject.about;
   editPopup.open();
 });
 
 addButton.addEventListener("click", () => {
   addNewPhotoPopup.open();
+});
+
+const handlePopupWithButton = (cardId) => {
+  api.deleteCard(cardId)
+  .then(() => {
+    popupWithButton.close();
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+}
+
+const popupWithButton = new PopupWithButton('.popup_delete', handlePopupWithButton);
+
+popupWithButton.setEventListeners();
+
+function handleAvatarFormSubmit({ data }) {
+  api.editAvatar({ data })
+  .then(({ data }) => {
+    userInfo.setUserInfo({ data });
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+}
+
+const editAvatarPopup = new PopupWithForm('.popup_edit-avatar', handleAvatarFormSubmit);
+editAvatarPopup.setEventListeners();
+
+editAvatarButton.addEventListener("click", () => {
+  editAvatarPopup.open();
 });

@@ -36,9 +36,11 @@ export const formValidationConfig = {
 
 export const editButton = document.querySelector(".profile__info-edit-button");
 export const addButton = document.querySelector(".profile__info-add-button");
+export const deleteButton = document.querySelector(".element__delete");
 export const inputName = document.querySelector(".popup__input-text_type_name");
 export const inputCaption = document.querySelector(".popup__input-text_type_caption");
 export const editFormElement = document.forms["about"];
 export const addFormElement = document.querySelector(".popup__form_add");
 export const elementsList = document.querySelector(".elements__list");
 export const cardTemplate = document.querySelector(".element-template");
+export const editAvatarButton = document.querySelector(".profile__avatar");
