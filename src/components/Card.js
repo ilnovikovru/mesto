@@ -37,6 +37,10 @@ export default class Card {
     this._likeButton.classList.toggle("element__like_active");
   }
 
+  setLikesCount() {
+    this._element.querySelector(".element__like-count").textContent = this._likes.length;
+  }
+
   _handleLikeButton = () => {
     this._likeButton.addEventListener("click", () => {
       this._toggleLike();
@@ -94,10 +98,6 @@ export default class Card {
 
   deleteLike() {
     this._likeButton.classList.remove('element__like_active');
-  }
-
-  setLikesCount() {
-    this._element.querySelector(".element__like-count").textContent = this._likes.length;
   }
 
   generateCard() {

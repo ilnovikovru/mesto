@@ -6,7 +6,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithButton from "../components/PopupWithButton.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js"; // импортируем класс Апи
-import { formValidationConfig, editButton, addButton, editAvatarButton,
+import { formValidationConfig, editButton, addButton, editAvatarButton, editAvatarFormElement,
   inputName, inputCaption, editFormElement, addFormElement, cardTemplate } from "../utils/constants.js";
 import '../pages/index.css';
 
@@ -34,6 +34,9 @@ profileValidator.enableValidation();
 
 const cardFormValidator = new FormValidator(formValidationConfig, addFormElement);
 cardFormValidator.enableValidation();
+
+const profileAvatarFormValidator = new FormValidator(formValidationConfig, editAvatarFormElement);
+profileAvatarFormValidator.enableValidation();
 
 const photoPopup = new PopupWithImage('.popup_photo');
 photoPopup.setEventListeners();
@@ -75,7 +78,10 @@ const addNewCard = ({ name, link }) => {
   addNewPhotoPopup.close();
 };
 
-const editPopup = new PopupWithForm('.popup_edit', handleProfileFormSubmit);
+const editPopup = new PopupWithForm('.popup_edit', handleProfileFormSubmit, (isLoading) => {
+  editPopup.updateSubmitButton(isLoading);
+}, '.popup__submit-button');
+
 editPopup.setEventListeners();
 
 const userInfo = new UserInfo({
@@ -85,22 +91,30 @@ const userInfo = new UserInfo({
 });
 
 function handleProfileFormSubmit({ name, about, avatar }) {
+  editPopup.updateSubmitButton(true);
   api.editUserInfo({ name, about, avatar })
-  .then(({ name, about, avatar }) => {
-    userInfo.setUserInfo({ name, about, avatar });
-  })
-  .catch((err) => {
-    console.log(err);
-  })
+    .then(({ name, about, avatar }) => {
+      userInfo.setUserInfo({ name, about, avatar });
+      editPopup.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      editPopup.updateSubmitButton(false);
+    });
 }
 
-const addNewPhotoPopup = new PopupWithForm('.popup_add', handleAddPhotoFormSubmit);
+const addNewPhotoPopup = new PopupWithForm('.popup_add', handleAddPhotoFormSubmit, (isLoading) => {
+  addNewPhotoPopup.updateSubmitButton(isLoading);
+}, '.popup__submit-button_add');
 addNewPhotoPopup.setEventListeners();
 
 function handleAddPhotoFormSubmit({ name, link }) {
-  console.log({ name, link });
+  addNewPhotoPopup.updateSubmitButton(true);
   const element = { name, link };
   addNewCard(element);
+  addNewPhotoPopup.updateSubmitButton(false);
   cardFormValidator.toggleButton();
 }
 
@@ -129,10 +143,10 @@ const popupWithButton = new PopupWithButton('.popup_delete', handlePopupWithButt
 
 popupWithButton.setEventListeners();
 
-function handleAvatarFormSubmit({ data }) {
-  api.editAvatar({ data })
-  .then(({ data }) => {
-    userInfo.setUserInfo({ data });
+function handleAvatarFormSubmit(data) {
+  api.editAvatar(data)
+  .then((data) => {
+    userInfo.setUserInfo(data);
   })
   .catch((err) => {
     console.log(err);

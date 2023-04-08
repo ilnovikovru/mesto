@@ -44,3 +44,4 @@ export const addFormElement = document.querySelector(".popup__form_add");
 export const elementsList = document.querySelector(".elements__list");
 export const cardTemplate = document.querySelector(".element-template");
 export const editAvatarButton = document.querySelector(".profile__avatar");
+export const editAvatarFormElement = document.forms["edit-avatar"];
