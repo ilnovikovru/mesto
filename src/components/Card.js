@@ -66,9 +66,8 @@ export default class Card {
   }
 
   setLikesCount(likes) {
-    console.log(likes);
     this._likes = likes;
-    this._element.querySelector(".element__like-count").textContent = likes.length;
+    this._likeCount.textContent = likes.length;
   }
 
   _handleCardClickInner = () => {
@@ -92,7 +91,7 @@ export default class Card {
   }
 
   isCardLike() {
-    return this._likes.some((like) => like._id === this._userId);
+    return this._likes.some((like) => like._id === this._ownerID);
   }
 
   setLike() {
@@ -107,6 +106,7 @@ export default class Card {
     this._element = this._getTemplate();
     this._likeButton = this._element.querySelector(".element__like");
     this._cardImage = this._element.querySelector(".element__image");
+    this._likeCount = this._element.querySelector(".element__like-count");
 
     this._photoPopupSelector = document.querySelector(".popup_photo");
     this._photoPopupImage = this._photoPopupSelector.querySelector('.popup__photo-image');

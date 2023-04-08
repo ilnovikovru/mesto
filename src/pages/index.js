@@ -66,10 +66,10 @@ const renderInitialCard = (item) => { // и это тоже
 
 const section = new Section(renderInitialCard, '.elements__list');
 
-const addNewCard = ({ name, link }) => {
-  api.addCard({ name, link })
-  .then(({ name, link }) => {
-    section.addItem(createCard({ name, link }));
+const addNewCard = ({ name, link, likes, owner, _id }) => {
+  api.addCard({ name, link, likes, owner, _id })
+  .then(({ name, link, likes, owner, _id }) => {
+    section.addItem(createCard({ name, link, likes, owner, _id }));
   })
   .catch((err) => {
     console.log(err);
@@ -146,14 +146,21 @@ popupWithButton.setEventListeners();
 function handleAvatarFormSubmit(data) {
   api.editAvatar(data)
   .then((data) => {
+    editAvatarPopup.updateSubmitButton(true);
     userInfo.setUserInfo(data);
   })
   .catch((err) => {
     console.log(err);
   })
+  .finally(() => {
+    editAvatarPopup.updateSubmitButton(false);
+    editAvatarPopup.close();
+  });
 }
 
-const editAvatarPopup = new PopupWithForm('.popup_edit-avatar', handleAvatarFormSubmit);
+const editAvatarPopup = new PopupWithForm('.popup_edit-avatar', handleAvatarFormSubmit, (isLoading) => {
+  editAvatarPopup.updateSubmitButton(isLoading);
+}, '.popup__submit-button_edit-avatar');
 editAvatarPopup.setEventListeners();
 
 editAvatarButton.addEventListener("click", () => {
