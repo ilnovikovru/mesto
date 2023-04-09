@@ -3,7 +3,7 @@ import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import PopupWithButton from "../components/PopupWithButton.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js"; // импортируем класс Апи
 import { formValidationConfig, editButton, addButton, editAvatarButton, editAvatarFormElement,
@@ -23,7 +23,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()]) // вызываем фу
   const userData = data[0];
   const cardData = data[1];
   userInfo.setUserInfo(userData); // вставляем данные с сервера в профиль
-  section.renderItems(cardData); // вставляем данные с сервера в контейнер карточек
+  section.renderItems(cardData.reverse()); // вставляем данные с сервера в контейнер карточек
 })
 .catch((err) => {
   console.log(err); // если ошибка, выдаем ошибку
@@ -55,7 +55,7 @@ const createCard = (item) => {
     handleOpenPhotoPopup,
     photoPopup,
     api,
-    popupWithButton).
+    popupWithConfirmation).
     generateCard();
   return cardElement;
 }
@@ -66,10 +66,10 @@ const renderInitialCard = (item) => { // и это тоже
 
 const section = new Section(renderInitialCard, '.elements__list');
 
-const addNewCard = ({ name, link, likes, owner, _id }) => {
-  api.addCard({ name, link, likes, owner, _id })
-  .then(({ name, link, likes, owner, _id }) => {
-    section.addItem(createCard({ name, link, likes, owner, _id }));
+const addNewCard = (item) => {
+  api.addCard(item)
+  .then((item) => {
+    return section.addItem(createCard(item));
   })
   .catch((err) => {
     console.log(err);
@@ -129,19 +129,20 @@ addButton.addEventListener("click", () => {
   addNewPhotoPopup.open();
 });
 
-const handlePopupWithButton = (cardId) => {
+const handlePopupWithConfirmation = (cardId) => {
   api.deleteCard(cardId)
   .then(() => {
-    popupWithButton.close();
+
+    popupWithConfirmation.close();
   })
   .catch((err) => {
     console.log(err);
   })
 }
 
-const popupWithButton = new PopupWithButton('.popup_delete', handlePopupWithButton);
+const popupWithConfirmation = new PopupWithConfirmation('.popup_delete', handlePopupWithConfirmation);
 
-popupWithButton.setEventListeners();
+popupWithConfirmation.setEventListeners();
 
 function handleAvatarFormSubmit(data) {
   api.editAvatar(data)
