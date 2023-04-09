@@ -137,7 +137,7 @@
 /*!*****************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/popup/__delete-container/popup__delete-container.css ***!
   \*****************************************************************************************************************************************************************************************/
-.popup__delete-container{background:#fff;border-radius:10px;box-shadow:0 0 25px rgba(0,0,0,.15);cursor:default;margin:auto;min-width:350px;padding:34px 44px 37px 36px;position:relative}@media screen and (max-width:879px){.popup__delete-container{margin-left:19px;margin-right:19px;min-width:375px;padding:25px 22px 28px}}
+.popup__delete-container{background:#fff;border-radius:10px;box-shadow:0 0 25px rgba(0,0,0,.15);cursor:default;margin:auto;min-width:350px;padding:34px 44px 37px 36px;position:relative}@media screen and (max-width:879px){.popup__delete-container{margin-left:19px;margin-right:19px;min-width:332px;padding:25px 22px 28px}}
 /*!*******************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/header/__logo/header__logo.css ***!
   \*******************************************************************************************************************************************************************/
