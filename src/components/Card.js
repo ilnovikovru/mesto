@@ -22,6 +22,7 @@ export default class Card {
     .then(() => {
       this._element = this._deleteButton.closest(".elements__list-item");
       this._element.remove();
+      this._popupWithButton.close();
     })
     .catch((err) => console.log(err))
 }
