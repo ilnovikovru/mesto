@@ -6,8 +6,6 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector(".popup__form");
     this._formSubmitCallback = formSubmitCallback;
     this._submitButton = this._form.querySelector(buttonSelector);
-    this._inputPhotoName = document.querySelector(".popup__input-text_type_title");
-    this._inputLink = document.querySelector(".popup__input-text_type_link");
     this._formInputs = this._form.querySelectorAll('.popup__input-text');
   }
 
@@ -20,7 +18,7 @@ export default class PopupWithForm extends Popup {
     return this._formValues;
   }
 
-  setEventListeners() { // изменено
+  setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();

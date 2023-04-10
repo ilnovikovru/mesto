@@ -46,7 +46,7 @@ const handleOpenPhotoPopup = (name, link) => {
 }
 
 const createCard = (item) => {
-  const cardElement = new Card(item.name,
+  const card = new Card(item.name,
     item.link,
     item.likes,
     item.owner._id,
@@ -55,8 +55,30 @@ const createCard = (item) => {
     handleOpenPhotoPopup,
     photoPopup,
     api,
-    popupWithConfirmation).
-    generateCard();
+    popupWithConfirmation, {
+      handleLikeClick: () => {
+        if(card.isCardLike()) {
+          api.dislikeCard(card.getCardId())
+          .then((data) => {
+            card.setLikesCount(data.likes);
+            card.deleteLike();
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        } else {
+          api.likeCard(card.getCardId())
+          .then((data) => {
+            card.setLikesCount(data.likes);
+            card.setLike();
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        };
+      }
+    });
+  const cardElement = card.generateCard();
   return cardElement;
 }
 
@@ -71,11 +93,10 @@ const addNewCard = (item) => {
   .then((item) => {
     return section.addItem(createCard(item));
   })
+  .then(addNewPhotoPopup.close())
   .catch((err) => {
     console.log(err);
   })
-
-  addNewPhotoPopup.close();
 };
 
 const editPopup = new PopupWithForm('.popup_edit', handleProfileFormSubmit, '.popup__submit-button');
@@ -128,6 +149,7 @@ addButton.addEventListener("click", () => {
 const handlePopupWithConfirmation = (cardId) => {
   api.deleteCard(cardId)
   .then(() => {
+    card.deleteCard();
     popupWithConfirmation.close();
   })
   .catch((err) => {
@@ -144,13 +166,13 @@ function handleAvatarFormSubmit(data) {
   .then((data) => {
     editAvatarPopup.updateSubmitButton(true);
     userInfo.setUserInfo(data);
+    editAvatarPopup.close();
   })
   .catch((err) => {
     console.log(err);
   })
   .finally(() => {
     editAvatarPopup.updateSubmitButton(false);
-    editAvatarPopup.close();
   });
 }
 

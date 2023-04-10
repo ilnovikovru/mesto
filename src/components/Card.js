@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(name, link, likes, id, cardId, template, handleCardClick, photoPopup, api, popupWithButton) {
+  constructor(name, link, likes, id, cardId, template, handleCardClick, photoPopup, api, popupWithButton, { handleLikeClick }) {
     this._name = name;
     this._link = link;
     this._likes = likes;
@@ -10,22 +10,21 @@ export default class Card {
     this._photoPopup = photoPopup;
     this._api = api;
     this._popupWithButton = popupWithButton;
+    this._handleLikeClick = handleLikeClick;
   }
 
   _getTemplate() {
-    const cardElement = this._template.content.cloneNode(true);
+    const cardElement = this._template.content.querySelector('.elements__list-item').cloneNode(true);
     return cardElement;
   }
 
   deleteCard(){
-    this._element = this._deleteButton.closest(".elements__list-item");
     this._element.remove();
 }
 
   _handleDeleteCard() {
     this._deleteButton.addEventListener("click", () => {
       this._popupWithButton.open(this._id);
-      this._popupWithButton.setFormSubmitAction(this.deleteCard.bind(this)); // обработчик прокинут при открытии
     });
   }
 
@@ -37,27 +36,7 @@ export default class Card {
   _handleLikeButton = () => {
     this._likeButton.addEventListener("click", () => {
       this._toggleLike();
-
-      if(this.isCardLike()) {
-        this._api.dislikeCard(this._id)
-        .then((data) => {
-          this.setLikesCount(data.likes);
-          this.deleteLike();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-      } else {
-        this._api.likeCard(this._id)
-        .then((data) => {
-          this.setLikesCount(data.likes);
-          this.setLike();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-      };
-
+      this._handleLikeClick();
     });
   }
 
@@ -96,6 +75,10 @@ export default class Card {
 
   deleteLike() {
     this._likeButton.classList.remove('element__like_active');
+  }
+
+  getCardId() {
+    return this._id;
   }
 
   generateCard() {
