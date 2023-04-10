@@ -78,9 +78,7 @@ const addNewCard = (item) => {
   addNewPhotoPopup.close();
 };
 
-const editPopup = new PopupWithForm('.popup_edit', handleProfileFormSubmit, (isLoading) => {
-  editPopup.updateSubmitButton(isLoading);
-}, '.popup__submit-button');
+const editPopup = new PopupWithForm('.popup_edit', handleProfileFormSubmit, '.popup__submit-button');
 
 editPopup.setEventListeners();
 
@@ -105,9 +103,7 @@ function handleProfileFormSubmit({ name, about, avatar }) {
     });
 }
 
-const addNewPhotoPopup = new PopupWithForm('.popup_add', handleAddPhotoFormSubmit, (isLoading) => {
-  addNewPhotoPopup.updateSubmitButton(isLoading);
-}, '.popup__submit-button_add');
+const addNewPhotoPopup = new PopupWithForm('.popup_add', handleAddPhotoFormSubmit, '.popup__submit-button_add');
 addNewPhotoPopup.setEventListeners();
 
 function handleAddPhotoFormSubmit({ name, link }) {
@@ -132,7 +128,6 @@ addButton.addEventListener("click", () => {
 const handlePopupWithConfirmation = (cardId) => {
   api.deleteCard(cardId)
   .then(() => {
-
     popupWithConfirmation.close();
   })
   .catch((err) => {
@@ -159,9 +154,7 @@ function handleAvatarFormSubmit(data) {
   });
 }
 
-const editAvatarPopup = new PopupWithForm('.popup_edit-avatar', handleAvatarFormSubmit, (isLoading) => {
-  editAvatarPopup.updateSubmitButton(isLoading);
-}, '.popup__submit-button_edit-avatar');
+const editAvatarPopup = new PopupWithForm('.popup_edit-avatar', handleAvatarFormSubmit, '.popup__submit-button_edit-avatar');
 editAvatarPopup.setEventListeners();
 
 editAvatarButton.addEventListener("click", () => {

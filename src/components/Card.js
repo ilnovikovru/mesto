@@ -17,20 +17,15 @@ export default class Card {
     return cardElement;
   }
 
-  _deleteCard(){
-    this._api.deleteCard(this._id)
-    .then(() => {
-      this._element = this._deleteButton.closest(".elements__list-item");
-      this._element.remove();
-      this._popupWithButton.close();
-    })
-    .catch((err) => console.log(err))
+  deleteCard(){
+    this._element = this._deleteButton.closest(".elements__list-item");
+    this._element.remove();
 }
 
   _handleDeleteCard() {
     this._deleteButton.addEventListener("click", () => {
       this._popupWithButton.open(this._id);
-      this._popupWithButton.setFormSubmitAction(this._deleteCard.bind(this));
+      this._popupWithButton.setFormSubmitAction(this.deleteCard.bind(this)); // обработчик прокинут при открытии
     });
   }
 
