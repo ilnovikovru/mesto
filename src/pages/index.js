@@ -45,6 +45,16 @@ const handleOpenPhotoPopup = (name, link) => {
   photoPopup.open(name, link);
 }
 
+const handlePopupWithConfirmation = (cardId) => {
+  return api.deleteCard(cardId)
+  .then(() => {
+    popupWithConfirmation.close();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
+
 const createCard = (item) => {
   const card = new Card(item.name,
     item.link,
@@ -77,7 +87,7 @@ const createCard = (item) => {
           })
         };
       }
-    });
+    }, handlePopupWithConfirmation);
   const cardElement = card.generateCard();
   return cardElement;
 }
@@ -145,17 +155,6 @@ editButton.addEventListener("click", () => {
 addButton.addEventListener("click", () => {
   addNewPhotoPopup.open();
 });
-
-const handlePopupWithConfirmation = (cardId) => {
-  api.deleteCard(cardId)
-  .then(() => {
-    card.deleteCard();
-    popupWithConfirmation.close();
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-}
 
 const popupWithConfirmation = new PopupWithConfirmation('.popup_delete', handlePopupWithConfirmation);
 
