@@ -46,14 +46,17 @@ const handleOpenPhotoPopup = (name, link) => {
 }
 
 const handlePopupWithConfirmation = (card) => {
-  return api.deleteCard(card._id)
-    .then(() => {
-      card.deleteCard();
-      popupWithConfirmation.close();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  popupWithConfirmation.setFormSubmitAction(() => {
+    api.deleteCard(card._id)
+      .then(() => {
+        card.deleteCard();
+        popupWithConfirmation.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  popupWithConfirmation.open(card._id);
 }
 
 const createCard = (item) => {

@@ -20,16 +20,13 @@ export default class Card {
     return cardElement;
   }
 
-  deleteCard(){
+  deleteCard() {
     this._element.remove();
-}
+  }
 
   _handleDeleteCard() {
     this._deleteButton.addEventListener("click", () => {
-      this._popupWithButton.open(this._id);
-      this._popupWithButton.setFormSubmitAction(() => {
-        this._handlePopupWithConfirmation(this);
-      });
+      this._handlePopupWithConfirmation(this);
     });
   }
 
