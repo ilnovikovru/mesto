@@ -45,14 +45,15 @@ const handleOpenPhotoPopup = (name, link) => {
   photoPopup.open(name, link);
 }
 
-const handlePopupWithConfirmation = (cardId) => {
-  return api.deleteCard(cardId)
-  .then(() => {
-    popupWithConfirmation.close();
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const handlePopupWithConfirmation = (card) => {
+  return api.deleteCard(card._id)
+    .then(() => {
+      card.deleteCard();
+      popupWithConfirmation.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 const createCard = (item) => {
@@ -92,21 +93,20 @@ const createCard = (item) => {
   return cardElement;
 }
 
-const renderInitialCard = (item) => { // и это тоже
+const renderInitialCard = (item) => {
   section.addItem(createCard(item));
 };
 
 const section = new Section(renderInitialCard, '.elements__list');
 
 const addNewCard = (item) => {
-  api.addCard(item)
-  .then((item) => {
-    return section.addItem(createCard(item));
-  })
-  .then(addNewPhotoPopup.close())
-  .catch((err) => {
-    console.log(err);
-  })
+  return api.addCard(item)
+    .then((item) => {
+      section.addItem(createCard(item));
+    })
+    .catch((err) => {
+      console.log(err);
+    })
 };
 
 const editPopup = new PopupWithForm('.popup_edit', handleProfileFormSubmit, '.popup__submit-button');
@@ -138,11 +138,18 @@ const addNewPhotoPopup = new PopupWithForm('.popup_add', handleAddPhotoFormSubmi
 addNewPhotoPopup.setEventListeners();
 
 function handleAddPhotoFormSubmit({ name, link }) {
-  addNewPhotoPopup.updateSubmitButton(true);
   const element = { name, link };
-  addNewCard(element);
-  addNewPhotoPopup.updateSubmitButton(false);
-  cardFormValidator.toggleButton();
+  addNewCard(element)
+    .then(() => {
+      addNewPhotoPopup.close();
+      cardFormValidator.toggleButton();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      addNewPhotoPopup.updateSubmitButton(false);
+    });
 }
 
 editButton.addEventListener("click", () => {

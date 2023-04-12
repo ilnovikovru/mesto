@@ -28,11 +28,7 @@ export default class Card {
     this._deleteButton.addEventListener("click", () => {
       this._popupWithButton.open(this._id);
       this._popupWithButton.setFormSubmitAction(() => {
-        this._handlePopupWithConfirmation(this._id)
-        .then(() => {
-          this.deleteCard();
-          this._popupWithButton.close();
-        })
+        this._handlePopupWithConfirmation(this);
       });
     });
   }
