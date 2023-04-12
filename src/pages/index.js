@@ -56,7 +56,6 @@ const handlePopupWithConfirmation = (card) => {
         console.log(err);
       });
   });
-  popupWithConfirmation.open(card._id);
 }
 
 const createCard = (item) => {
