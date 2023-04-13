@@ -5,12 +5,12 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
-import Api from "../components/Api.js"; // импортируем класс Апи
+import Api from "../components/Api.js";
 import { formValidationConfig, editButton, addButton, editAvatarButton, editAvatarFormElement,
   inputName, inputCaption, editFormElement, addFormElement, cardTemplate } from "../utils/constants.js";
 import '../pages/index.css';
 
-const api = new Api({ // записываем экзепляр класса, передаем ему адрес сервера и как брать данные
+const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-62',
   headers: {
     'content-type': 'application/json',
@@ -18,15 +18,15 @@ const api = new Api({ // записываем экзепляр класса, п�
   }
 });
 
-Promise.all([api.getUserInfo(), api.getInitialCards()]) // вызываем функции запроса данных пользователя и карточек
+Promise.all([api.getUserInfo(), api.getInitialCards()])
 .then(data => {
   const userData = data[0];
   const cardData = data[1];
-  userInfo.setUserInfo(userData); // вставляем данные с сервера в профиль
-  section.renderItems(cardData.reverse()); // вставляем данные с сервера в контейнер карточек
+  userInfo.setUserInfo(userData);
+  section.renderItems(cardData.reverse());
 })
 .catch((err) => {
-  console.log(err); // если ошибка, выдаем ошибку
+  console.log(err);
 })
 
 const profileValidator = new FormValidator(formValidationConfig, editFormElement);
@@ -46,6 +46,7 @@ const handleOpenPhotoPopup = (name, link) => {
 }
 
 const handlePopupWithConfirmation = (card) => {
+  popupWithConfirmation.open();
   popupWithConfirmation.setFormSubmitAction(() => {
     api.deleteCard(card._id)
       .then(() => {
@@ -102,13 +103,19 @@ const renderInitialCard = (item) => {
 const section = new Section(renderInitialCard, '.elements__list');
 
 const addNewCard = (item) => {
+  addNewPhotoPopup.updateSubmitButton(true);
   return api.addCard(item)
     .then((item) => {
       section.addItem(createCard(item));
+      addNewPhotoPopup.close();
+      cardFormValidator.toggleButton();
     })
     .catch((err) => {
       console.log(err);
     })
+    .finally(() => {
+      addNewPhotoPopup.updateSubmitButton(false);
+    });
 };
 
 const editPopup = new PopupWithForm('.popup_edit', handleProfileFormSubmit, '.popup__submit-button');
@@ -141,17 +148,7 @@ addNewPhotoPopup.setEventListeners();
 
 function handleAddPhotoFormSubmit({ name, link }) {
   const element = { name, link };
-  addNewCard(element)
-    .then(() => {
-      addNewPhotoPopup.close();
-      cardFormValidator.toggleButton();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      addNewPhotoPopup.updateSubmitButton(false);
-    });
+  addNewCard(element);
 }
 
 editButton.addEventListener("click", () => {
@@ -165,14 +162,14 @@ addButton.addEventListener("click", () => {
   addNewPhotoPopup.open();
 });
 
-const popupWithConfirmation = new PopupWithConfirmation('.popup_delete', handlePopupWithConfirmation);
+const popupWithConfirmation = new PopupWithConfirmation('.popup_delete');
 
 popupWithConfirmation.setEventListeners();
 
 function handleAvatarFormSubmit(data) {
+  editAvatarPopup.updateSubmitButton(true);
   api.editAvatar(data)
   .then((data) => {
-    editAvatarPopup.updateSubmitButton(true);
     userInfo.setUserInfo(data);
     editAvatarPopup.close();
   })

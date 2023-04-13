@@ -26,19 +26,12 @@ export default class Card {
 
   _handleDeleteCard() {
     this._deleteButton.addEventListener("click", () => {
-      this._popupWithButton.open(this._id);
       this._handlePopupWithConfirmation(this);
     });
   }
 
-  _toggleLike(){
-    this._likeButton.classList.toggle("element__like_active");
-  }
-
-
   _handleLikeButton = () => {
     this._likeButton.addEventListener("click", () => {
-      this._toggleLike();
       this._handleLikeClick();
     });
   }
